@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Module Management - CA3</title>
+        <link href="main.css" rel="stylesheet" />
+
+        <link href="index.css" rel="stylesheet" />
+    </head>
+    <body>
+        <header>
+            <a href="./">Home</a>
+            <a href="./create">Create</a>
+            <a href="./retrieve">Retrieve</a>
+            <a href="./retrieve/all">Retrieve All</a>
+            <a href="./delete">Delete</a>
+            <a href="./update">Update</a>
+        </header>
+        <section style="height: auto">
+            <div>
+                <h1>BED Recap</h1>
+                <div>
+                    <h3>Optional Self Practice Tasks</h3>
+                    <ol>
+                        <li>Implement Delete by Code</li>
+                        <li>Implement Update Credit by Code</li>
+                        <li>Implement View all Module</li>
+                        <li>Implement GPA calculator</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3>Initialize Table</h3>
+                    <button id="init-table">Do it!</button>
+                </div>
+            </div>
+        </section>
+    </body>
+    <script>
+        document.getElementById('init-table').onclick = function () {
+            this.disabled = true;
+            this.textContent = 'Loading...';
+            fetch('/modules/table', { method: 'post' })
+                .then((response) => response.json())
+                .then((response) => {
+                    if (response.error) throw new Error(response.error);
+                    this.textContent = 'Done!';
+                })
+                .catch((e) => {
+                    this.textContent = e.message;
+                    this.style.color = 'red';
+                });
+        };
+    </script>
+</html>
